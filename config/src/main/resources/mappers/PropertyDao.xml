@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tim.config.dao.PropertyDao">
+    <sql id="propertyInfo">
+        propId, appName, propName, propValue, instruction, valid, createAt, updateAt
+    </sql>
+
+    <select id="findPropertyListByAppName" resultType="com.tim.config.entity.Property">
+        SELECT
+        <include refid="propertyInfo"></include>
+        FROM
+        tb_property
+        WHERE appName = #{appName}
+        AND valid = TRUE
+    </select>
+</mapper>

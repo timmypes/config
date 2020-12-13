@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tim.configmanager.dao.PropertyDao">
+    <sql id="propertyInfo">
+        propId, appName, propName, propValue, instruction, valid, createAt, updateAt
+    </sql>
+
+    <select id="findPropertyListByAppName" resultType="com.tim.configmanager.entity.Property">
+        SELECT
+        <include refid="propertyInfo"></include>
+        FROM
+        tb_property
+        WHERE appName = #{appName}
+        AND valid = TRUE
+    </select>
+
+    <insert id="addProperty" parameterType="com.tim.configmanager.entity.Property">
+        INSERT INTO tb_property
+        (<include refid="propertyInfo" />)
+        VALUE
+        (#{property.propId}, #{property.appName}, #{property.propName}, #{property.propValue}, #{property.instruction}, TRUE, sysdate(), sysdate())
+    </insert>
+
+    <update id="updateProperty" parameterType="com.tim.configmanager.entity.Property">
+        UPDATE tb_property
+        SET propName = #{property.propName},
+        propValue = #{property.propValue},
+        instruction = #{property.instruction},
+        updateAt = sysdate()
+        WHERE propId = #{property.propId}
+    </update>
+
+    <update id="deleteProperty" parameterType="java.lang.String">
+        UPDATE tb_property
+        SET valid = FALSE
+        WHERE propId = #{propId}
+    </update>
+
+    <select id="getPropertyByAppNameAndPropName" resultType="com.tim.configmanager.entity.Property">
+        SELECT <include refid="propertyInfo" />
+        FROM tb_property
+        WHERE appName = #{appName}
+        AND propName = #{propName}
+        AND valid = TRUE
+    </select>
+
+    <select id="findPropertyList" resultType="com.tim.configmanager.entity.Property">
+        SELECT
+        <include refid="propertyInfo"></include>
+        FROM
+        tb_property
+        WHERE valid = TRUE
+        LIMIT #{pageStart}, #{pageSize}
+    </select>
+
+    <select id="countPropertySums" resultType="java.lang.Long">
+        SELECT COUNT(1)
+        FROM tb_property
+        WHERE valid = TRUE
+    </select>
+
+    <select id="getPropertyByPropId" resultType="com.tim.configmanager.entity.Property">
+        SELECT <include refid="propertyInfo" />
+        FROM tb_property
+        WHERE propId = #{propId}
+        AND valid = TRUE
+    </select>
+</mapper>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tim.configmanager.dao.PropertyRecordDao">
+    <sql id="PropertyRecordInfo">
+        recordId, propId, operateType, propName, propValue, appName, instruction, remark, createAt
+    </sql>
+
+    <insert id="addPropertyRecord" parameterType="com.tim.configmanager.entity.PropertyRecord">
+        INSERT INTO tb_property_record
+        (<include refid="PropertyRecordInfo" />)
+        VALUE
+        (#{propertyRecord.recordId}, #{propertyRecord.propId}, #{propertyRecord.operateType}, #{propertyRecord.propName}, #{propertyRecord.propValue},
+         #{propertyRecord.appName}, #{propertyRecord.instruction}, #{propertyRecord.remark}, sysdate())
+    </insert>
+
+    <select id="findRecordListByPropId" resultType="com.tim.configmanager.entity.PropertyRecord">
+        SELECT
+        <include refid="PropertyRecordInfo" />
+        FROM
+        tb_property_record
+        WHERE
+        propId = #{propId}
+        ORDER BY
+        createAt DESC
+        LIMIT #{start},#{size}
+    </select>
+
+    <select id="getRecordById" resultType="com.tim.configmanager.entity.PropertyRecord">
+        SELECT
+        <include refid="PropertyRecordInfo" />
+        FROM
+        tb_property_record
+        WHERE
+        recordId = #{recordId}
+    </select>
+
+    <select id="countDeliveryRecord" resultType="java.lang.Long">
+        SELECT COUNT(1)
+        FROM tb_property_record
+        WHERE propId = #{propId}
+    </select>
+</mapper>
