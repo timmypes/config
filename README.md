@@ -60,10 +60,10 @@
 
 #### 功能测试
 
-1. 调用configTest的test方法: 在浏览器中输入"http://localhost:8080/test"，返回报文时"{"prop2":null,"prop1":null,"prop4":null,"prop3":null}"，说明这4个属性没有被赋值。
+1. 调用configTest的test方法: 在浏览器中输入"http://localhost:8080/test" ，返回报文时"{"prop2":null,"prop1":null,"prop4":null,"prop3":null}"，说明这4个属性没有被赋值。
 
-2. 浏览器输入"http://localhost:3000/"进入配置中心管理站点，点击添加属性，分别给4个属性设置对应的值：
+2. 浏览器输入"http://localhost:3000/" 进入配置中心管理站点，点击添加属性，分别给4个属性设置对应的值：
 
    ![Image text](https://github.com/timmypes/lsconfig/blob/main/images/addProperty.png)
 
-3. 再次请求"http://localhost:8080/test"接口，报文中返回了每个属性对应的属性值，则测试成功。
+3. 再次请求"http://localhost:8080/test" 接口，报文中返回了每个属性对应的属性值，则测试成功。
